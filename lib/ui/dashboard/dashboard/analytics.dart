@@ -355,7 +355,7 @@ class AnalyticScreen extends StatelessWidget {
                                  color: Colors.transparent,
                                  borderRadius: BorderRadius.circular(20),
                                ),
-                               clipBehavior: Clip.hardEdge,
+                               // clipBehavior: Clip.hardEdge,
                                dataRowHeight: 70,
                                columnSpacing: 200,
                                headingRowHeight: 70,

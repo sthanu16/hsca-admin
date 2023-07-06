@@ -12,9 +12,11 @@ import '../../ui/dashboard/dashboard/user/model/delete_realtor_model.dart';
 import '../../ui/dashboard/dashboard/user/model/delete_user_model.dart';
 import '../../ui/dashboard/dashboard/user/model/update_realtor_model.dart';
 import '../../ui/dashboard/dashboard/user/model/user_detail_model.dart';
+import '../../ui/dashboard/house/model/common_model.dart';
 import '../../ui/dashboard/settings/model/app_update_model.dart';
 import '../../ui/dashboard/settings/model/app_update_response_model.dart';
 import '../../ui/dashboard/settings/model/change_password_model.dart';
+import '../../ui/dashboard/settings/model/forgot_password_model.dart';
 import '../../ui/realtor/model/add_realtor_model.dart';
 
 part 'auth_service.g.dart';
@@ -50,6 +52,9 @@ abstract class AuthService {
   @GET(AppConfig.houseDetail)
   Future<HouseDetail> houseDetail(@Query('houseId') String houseId,);
 
+    @GET(AppConfig.downloadReport)
+    Future<CommonModel> downloadReport(@Query('realtorId') String realtorId,);
+
   @GET(AppConfig.mixingData)
   Future<AppUpdateResponseModel> getMixingData(@Header("Content-Type") String contentType);
 
@@ -58,6 +63,10 @@ abstract class AuthService {
 
   @POST(AppConfig.sentReport)
   Future<SentReportModel> sentReport(@Body() Map<String, dynamic> data);
+
+  @POST(AppConfig.forgotPassword)
+  Future<ForgotPasswordModel> emailForgotPassword(@Body() Map<String, dynamic> data);
+
 
   @DELETE(AppConfig.deleteUser)
   Future<DeleteUserModel>userDelete(@Query('userId') String userId);

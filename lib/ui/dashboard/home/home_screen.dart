@@ -3,23 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../common/constant/color_constants.dart';
 import '../../../common/constant/image.dart';
-import '../../../common/constant/sizes.dart';
 import '../../../common/constant/string.dart';
 import '../../../common/constant/text_style_common.dart';
-import '../../../common/custom_widget/custom_appbar.dart';
-import '../../../common/custom_widget/custom_button.dart';
-import '../../../common/custom_widget/custom_textfield.dart';
 import '../../auth/edit_profile/edit_profile_screen.dart';
 import '../../result/result_screen.dart';
 import '../add_edit_house/add_house_listing.dart';
-import '../appliances/appliances_screen.dart';
-import '../bedrooms/master_bedroom_screen.dart';
-import '../community/community_screen.dart';
-import '../exterior/exteriors_screen.dart';
-import '../home/home_screen.dart';
-import '../interior/interiors_screen.dart';
-import '../kitchen/kitchen_screen.dart';
-import '../other_info/other_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {

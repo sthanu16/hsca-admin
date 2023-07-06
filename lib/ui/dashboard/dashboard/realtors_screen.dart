@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:html' as html;
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +20,7 @@ import '../../../common/custom_widget/pagination_footer.dart';
 import '../../../common/custom_widget/toast_service.dart';
 import '../../../common/locator/locator.dart';
 import '../../../data/model/get_retailer_model.dart';
+import '../../realtor/bloc/download_url_bloc.dart';
 
 class RealtorsScreen extends StatefulWidget {
   const RealtorsScreen({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class _RealtorsScreenState extends State<RealtorsScreen> {
   Timer? _debounce;
   DataBean? saveRetailerModel;
   int page =1;
+  int page1 =1;
   String keyword ='';
   TextEditingController searchController = TextEditingController();
 
@@ -61,7 +63,7 @@ class _RealtorsScreenState extends State<RealtorsScreen> {
              _debounce =
                  Timer(const Duration(milliseconds: 500), () {
                    BlocProvider.of<RealtorListBloc>(context).add(RealtorListRefreshEvent(
-                       page: page.toString(),
+                       page: page1.toString(),
                        keyword:  keyword
                    ));
                  });
@@ -118,7 +120,7 @@ class _RealtorsScreenState extends State<RealtorsScreen> {
                                  color: Colors.transparent,
                                  borderRadius: BorderRadius.circular(20),
                                ),
-                               clipBehavior: Clip.hardEdge,
+                               // clipBehavior: Clip.hardEdge,
                                headingRowColor:
                                MaterialStateColor.resolveWith((states) => ColorConstants.themeColor),
                                columns: [
@@ -153,7 +155,6 @@ class _RealtorsScreenState extends State<RealtorsScreen> {
                                        style: AppTextStyle.styleContainer20Blackw600.copyWith(fontSize: 14)
                                    ),
                                  ),
-
                                ],
                                rows: List.generate(
                                  listState.getRetailerModel?.data?.length??0,
@@ -289,27 +290,53 @@ class _RealtorsScreenState extends State<RealtorsScreen> {
                                padding: const EdgeInsets.symmetric(
                                    horizontal: 18.0, vertical: 20),
                                child: PaginationFooter(
-                                 currentPage: page,
+                                 currentPage:searchController.text.isNotEmpty?page1: page,
                                  totalPage: listState.getRetailerModel?.totalPage,
                                  previousTap: (int prePage) {
-                                   if(page>1){
-                                     page--;
-                                     BlocProvider.of<RealtorListBloc>(context).add(RealtorListRefreshEvent(
-                                         page: prePage.toString(),
-                                         keyword:  keyword
-                                     ));
+                                   if(searchController.text.isNotEmpty){
+                                     if(page1>1){
+                                       page1--;
+                                       BlocProvider.of<RealtorListBloc>(context).add(RealtorListRefreshEvent(
+                                           page: prePage.toString(),
+                                           keyword:  keyword
+                                       ));
+                                     }
+                                   }else{
+                                     if(page>1){
+                                       page--;
+                                       BlocProvider.of<RealtorListBloc>(context).add(RealtorListRefreshEvent(
+                                           page: prePage.toString(),
+                                           keyword:  keyword
+                                       ));
+                                     }
                                    }
                                  },
                                  nextTap: (int nextPage) {
-                                   if((listState.getRetailerModel?.totalPage)!>page){
-                                     page++;
-                                     BlocProvider.of<RealtorListBloc>(context).add(RealtorListRefreshEvent(
-                                         page: nextPage.toString(),
-                                         keyword:  keyword
-                                     ));
+                                   if(searchController.text.isNotEmpty){
+                                     if((listState.getRetailerModel?.totalPage)!>page1){
+                                       page1++;
+                                       BlocProvider.of<RealtorListBloc>(context).add(RealtorListRefreshEvent(
+                                           page: nextPage.toString(),
+                                           keyword:  keyword
+                                       ));
+                                     }
+
+                                   }else{
+                                     if((listState.getRetailerModel?.totalPage)!>page){
+                                       page++;
+                                       BlocProvider.of<RealtorListBloc>(context).add(RealtorListRefreshEvent(
+                                           page: nextPage.toString(),
+                                           keyword:  keyword
+                                       ));
+                                     }
+
                                    }
                                  },
-                                 currentLength:  listState.getRetailerModel?.data?.length??0,
+                                 currentLength:searchController.text.isNotEmpty ?
+                                 (page1 ==listState.getRetailerModel?.totalPage?(int.parse((listState.getRetailerModel?.totalLength??0).toString())):
+                                 ((listState.getRetailerModel?.data?.length)! * page1 ??0))??0
+                                     :(page ==listState.getRetailerModel?.totalPage?(int.parse((listState.getRetailerModel?.totalLength??0).toString())):
+                                 ((listState.getRetailerModel?.data?.length)! * page ??0))??0,
                                  totalLength: int.parse((listState.getRetailerModel?.totalLength??0).toString()),
                                )
                            )
@@ -328,7 +355,6 @@ class _RealtorsScreenState extends State<RealtorsScreen> {
              return Container();
            },
          )
-
        ],
      ),
     );

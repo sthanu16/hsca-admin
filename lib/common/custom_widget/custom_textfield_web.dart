@@ -16,6 +16,7 @@ class CustomTextFieldWeb extends StatelessWidget {
   Widget? prefix;
   Widget? suffix;
   Widget? prefixIcon;
+  Widget? suffixIcon;
   int? maxLines;
   int? maxLength;
   bool? obscureText;
@@ -35,6 +36,7 @@ class CustomTextFieldWeb extends StatelessWidget {
       this.prefix,
       this.suffix,
       this.prefixIcon,
+      this.suffixIcon,
       this.onTap,
       this.labelText,
       this.hintText,
@@ -73,6 +75,7 @@ class CustomTextFieldWeb extends StatelessWidget {
               ),
           decoration: InputDecoration(
             prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
             fillColor: Colors.white,
             focusColor: Colors.green,
             hintText: hintText,

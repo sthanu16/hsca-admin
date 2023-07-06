@@ -30,6 +30,7 @@ class RegisteredUserScreen extends StatefulWidget {
 class _RegisteredUserScreenState extends State<RegisteredUserScreen> {
 
   int page =1;
+  int page1 =1;
   String keyword ='';
   TextEditingController searchController = TextEditingController();
   Timer? _debounce;
@@ -58,7 +59,7 @@ class _RegisteredUserScreenState extends State<RegisteredUserScreen> {
                 _debounce =
                     Timer(const Duration(milliseconds: 500), () {
                       BlocProvider.of<UserListBloc>(context).add(UserListRefreshEvent(
-                          page: page.toString(),
+                          page: page1.toString(),
                           keyword:  keyword
                       ));
                     });
@@ -89,7 +90,7 @@ class _RegisteredUserScreenState extends State<RegisteredUserScreen> {
                                     color: Colors.transparent,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  clipBehavior: Clip.hardEdge,
+                                  // clipBehavior: Clip.hardEdge,
                                   dataRowHeight: 70,
                                   headingRowHeight: 70,
                                   columnSpacing: 200,
@@ -247,28 +248,54 @@ class _RegisteredUserScreenState extends State<RegisteredUserScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 18.0, vertical: 20),
                                   child: PaginationFooter(
-                                    currentPage: page,
+                                    currentPage:searchController.text.isNotEmpty?page1: page,
                                     totalPage: state.userListModel?.totalPage,
                                     previousTap: (int prePage) {
-                                      if(page>1){
-                                        page--;
-                                        BlocProvider.of<UserListBloc>(context).add(UserListRefreshEvent(
-                                            page: prePage.toString(),
-                                            keyword: keyword
-                                        ));
+                                      if(searchController.text.isNotEmpty){
+                                        if(page1>1){
+                                          page1--;
+                                          BlocProvider.of<UserListBloc>(context).add(UserListRefreshEvent(
+                                              page: prePage.toString(),
+                                              keyword: keyword
+                                          ));
+                                        }
+                                      }else{
+                                        if(page>1){
+                                          page--;
+                                          BlocProvider.of<UserListBloc>(context).add(UserListRefreshEvent(
+                                              page: prePage.toString(),
+                                              keyword: keyword
+                                          ));
+                                        }
                                       }
                                     },
                                     nextTap: (int nextPage) {
-                                      if((state.userListModel?.totalPage)!>page){
-                                        page++;
-                                        BlocProvider.of<UserListBloc>(context).add(UserListRefreshEvent(
-                                            page: nextPage.toString(),
-                                            keyword: keyword
-                                        ));
+                                      if(searchController.text.isNotEmpty){
+                                        if((state.userListModel?.totalPage)!>page1){
+                                          page1++;
+                                          BlocProvider.of<UserListBloc>(context).add(UserListRefreshEvent(
+                                              page: nextPage.toString(),
+                                              keyword: keyword
+                                          ));
+                                        }
+
+                                      }else{
+                                        if((state.userListModel?.totalPage)!>page){
+                                          page++;
+                                          BlocProvider.of<UserListBloc>(context).add(UserListRefreshEvent(
+                                              page: nextPage.toString(),
+                                              keyword: keyword
+                                          ));
+                                        }
+
                                       }
                                     },
                                     totalLength: int.parse((state.userListModel?.totalLength??0).toString()),
-                                    currentLength: state.userListModel?.data?.length??0,
+                                    currentLength:searchController.text.isNotEmpty ?
+                                    (page1 ==state.userListModel?.totalPage?(int.parse((state.userListModel?.totalLength??0).toString())):
+                                    ((state.userListModel?.data?.length)! * page1 ??0))??0
+                                        :(page ==state.userListModel?.totalPage?(int.parse((state.userListModel?.totalLength??0).toString())):
+                                    ((state.userListModel?.data?.length)! * page ??0))??0,
                                   )
                               )
 

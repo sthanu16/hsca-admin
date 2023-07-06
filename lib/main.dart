@@ -16,7 +16,10 @@ import 'package:hsca/ui/dashboard/house/bloc/sent_report_bloc.dart';
 import 'package:hsca/ui/dashboard/settings/bloc/app_update_bloc.dart';
 import 'package:hsca/ui/dashboard/settings/bloc/change_password_bloc.dart';
 import 'package:hsca/ui/realtor/bloc/add_realtor_bloc.dart';
+import 'package:hsca/ui/realtor/bloc/download_url_bloc.dart';
+import 'package:hsca/ui/splash/splash_screen.dart';
 
+import 'bloc/forgot_password_bloc.dart';
 import 'bloc/get_login.dart';
 
 import 'api/repository/base/auth/auth_repo.dart';
@@ -80,6 +83,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<SentReportBloc>(create: (context) => SentReportBloc(_authRepository)),
         BlocProvider<GetLoginBloc>(create: (context) => GetLoginBloc()),
         BlocProvider<HouseDetailBloc>(create: (context) => HouseDetailBloc(_authRepository)),
+        BlocProvider<ForgotPasswordBloc>(create: (context) => ForgotPasswordBloc(_authRepository)),
+        BlocProvider<DownloadUrlBloc>(create: (context) => DownloadUrlBloc(_authRepository)),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

@@ -20,8 +20,8 @@ class _AuthService implements AuthService {
 
   @override
   Future<LoginModel> loginUser(
-    contentType,
-    data,
+    String contentType,
+    Map<String, dynamic> data,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -49,8 +49,8 @@ class _AuthService implements AuthService {
 
   @override
   Future<GetRetailerModel> realtorList(
-    keyword,
-    page,
+    String keyword,
+    String page,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -77,7 +77,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<AddRealtorModel> addRealtor(data) async {
+  Future<AddRealtorModel> addRealtor(Map<String, dynamic> data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -101,7 +101,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<ChangePasswordModel> changePassword(data) async {
+  Future<ChangePasswordModel> changePassword(Map<String, dynamic> data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -125,7 +125,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<UpdateRealtorModel> updateRealtor(data) async {
+  Future<UpdateRealtorModel> updateRealtor(Map<String, dynamic> data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -150,9 +150,9 @@ class _AuthService implements AuthService {
 
   @override
   Future<UserListModel> userList(
-    contentType,
-    keyword,
-    page,
+    String contentType,
+    String keyword,
+    String page,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -181,7 +181,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<GetDashboardModel> dashboardData(contentType) async {
+  Future<GetDashboardModel> dashboardData(String contentType) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': contentType};
@@ -206,7 +206,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<UserDetailModel> userDetail(userId) async {
+  Future<UserDetailModel> userDetail(String userId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'userId': userId};
     final _headers = <String, dynamic>{};
@@ -229,7 +229,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<HouseDetail> houseDetail(houseId) async {
+  Future<HouseDetail> houseDetail(String houseId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'houseId': houseId};
     final _headers = <String, dynamic>{};
@@ -252,7 +252,30 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<AppUpdateResponseModel> getMixingData(contentType) async {
+  Future<CommonModel> downloadReport(String realtorId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'realtorId': realtorId};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<CommonModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/admin/downloadReport',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CommonModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AppUpdateResponseModel> getMixingData(String contentType) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': contentType};
@@ -277,7 +300,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<AppUpdateModel> appUpdate(data) async {
+  Future<AppUpdateModel> appUpdate(Map<String, dynamic> data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -301,7 +324,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<SentReportModel> sentReport(data) async {
+  Future<SentReportModel> sentReport(Map<String, dynamic> data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -325,7 +348,32 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<DeleteUserModel> userDelete(userId) async {
+  Future<ForgotPasswordModel> emailForgotPassword(
+      Map<String, dynamic> data) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ForgotPasswordModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/admin/forgotPassword',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ForgotPasswordModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<DeleteUserModel> userDelete(String userId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'userId': userId};
     final _headers = <String, dynamic>{};
@@ -348,7 +396,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<DeleteUserModel> houseDelete(houseId) async {
+  Future<DeleteUserModel> houseDelete(String houseId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'houseId': houseId};
     final _headers = <String, dynamic>{};
@@ -371,7 +419,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<DeleteRealtorModel> deleteRealtor(realtorId) async {
+  Future<DeleteRealtorModel> deleteRealtor(String realtorId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'realtorId': realtorId};
     final _headers = <String, dynamic>{};

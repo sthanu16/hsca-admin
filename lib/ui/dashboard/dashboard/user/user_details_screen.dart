@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hsca/common/custom_widget/navigation_service.dart';
 import 'package:hsca/common/custom_widget/toast_service.dart';
 import 'package:hsca/ui/dashboard/dashboard/user/bloc/user_detail_bloc.dart';
 import 'package:hsca/ui/dashboard/house/bloc/sent_report_bloc.dart';
@@ -348,7 +347,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                               ),
-                                              clipBehavior: Clip.hardEdge,
+                                              // clipBehavior: Clip.hardEdge,
                                               dataRowHeight: 70,
                                               columnSpacing: 200,
                                               headingRowHeight: 70,
@@ -579,7 +578,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                     ),
                                   )
                                 : Container(),
-                            (listState.userDetailModel?.data?.houseData
+                            /*(listState.userDetailModel?.data?.houseData
                                         ?.length)! >
                                     0
                                 ? addHeight(20)
@@ -690,7 +689,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                   ],
                                 ),
                               ),
-                            ),
+                            ),*/
                           ],
                         )),
                   ],

@@ -18,8 +18,7 @@ class AppUtils {
 
   Future logoutUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('user_logged_in', false);
-    prefs.setString('token', '');
+    prefs.clear();
   }
 
   void setUserLoggedIn() async {
@@ -75,5 +74,11 @@ class AppUtils {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String number = prefs.getString('phone_number') ?? "";
     return number;
+  }
+
+  logout() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.remove(token);
+    logoutUser();
   }
 }

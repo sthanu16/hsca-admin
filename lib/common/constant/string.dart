@@ -11,6 +11,7 @@ class StringControl{
   static const String submit ="Submit";
   static const String update ="Update";
   static const String country ="Country";
+  static const String confirm ="Confirm";
   static const String enterCountry ="Enter Country";
   static const String save ="Save";
   static const String aboutExteriors ="About the Exteriors";
@@ -181,5 +182,6 @@ class StringControl{
   static const String  errorMessage = 'Something Went Wrong';
   static const String  registeredUser = 'Registered Users';
   static const String  welcomeDashboard = 'Welcome to Admin Dashboard';
+  static const String  forgotPassword = 'Forgot Password ?';
 
 }

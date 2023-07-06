@@ -8,11 +8,13 @@ import '../../../../ui/dashboard/dashboard/user/model/delete_user_model.dart';
 import '../../../../ui/dashboard/dashboard/user/model/update_realtor_model.dart';
 import '../../../../ui/dashboard/dashboard/user/model/user_detail_model.dart';
 import '../../../../ui/dashboard/dashboard/user/model/user_list_model.dart';
+import '../../../../ui/dashboard/house/model/common_model.dart';
 import '../../../../ui/dashboard/house/model/house_detail_model.dart';
 import '../../../../ui/dashboard/house/model/sent_report_model.dart';
 import '../../../../ui/dashboard/settings/model/app_update_model.dart';
 import '../../../../ui/dashboard/settings/model/app_update_response_model.dart';
 import '../../../../ui/dashboard/settings/model/change_password_model.dart';
+import '../../../../ui/dashboard/settings/model/forgot_password_model.dart';
 import '../../../../ui/realtor/model/add_realtor_model.dart';
 import '../../../network/result.dart';
 import '../../../service/auth_service.dart';
@@ -154,10 +156,18 @@ class AuthRepository extends BaseRepository {
           userId
       ));
 
+  Future<Result<CommonModel>> downloadReport(String realtorId) async =>
+      safeCall(AuthService(await dio).downloadReport(realtorId));
+
+
   Future<Result<DeleteUserModel>> deleteHouse(dynamic houseId) async =>
       safeCall(AuthService(await dio).houseDelete(
           houseId
       ));
+
+  Future<Result<ForgotPasswordModel>> forgotPassword(String email) async =>
+      safeCall(AuthService(await dio).emailForgotPassword({'email': email}));
+
 
   Future<Result<DeleteRealtorModel>> deleteRealtor(String realtorId) async =>
       safeCall(AuthService(await dio).deleteRealtor(realtorId));

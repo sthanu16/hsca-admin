@@ -6,6 +6,9 @@ import 'package:flutter/foundation.dart';
 import '../../../common/constant/alert_message.dart';
 import '../../../common/constant/app_config.dart';
 import '../../../common/constant/app_utils.dart';
+import '../../../common/custom_widget/navigation_service.dart';
+import '../../../common/locator/locator.dart';
+import '../../../common/router/router.gr.dart';
 import '../../network/result.dart';
 
 
@@ -64,6 +67,12 @@ abstract class BaseRepository {
           },
           onError: (error, handler) async {
               if (error.response?.statusCode == 401) {
+                try {
+                  AppUtils().logout();
+                  locator<NavigationService>().pushAndRemoveUntil(LoginScreenRoute());
+                } catch (e) {
+                  // return e;
+                }
               }
             return handler.next(error);
           },

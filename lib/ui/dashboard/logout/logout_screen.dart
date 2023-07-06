@@ -95,6 +95,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
                                 backgroundColor:  MaterialStateProperty.all<Color>(ColorConstants.greenColor),
                               ),
                               onPressed: () {
+                                                AppUtils().logout();
                                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                                     builder: (BuildContext context) => const LoginScreen()));
                                 AppUtils().logoutUser();

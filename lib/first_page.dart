@@ -31,7 +31,8 @@ class _FirstPageState extends State<FirstPage> {
        if(state.isLogin??false){
          BlocProvider.of<DashboardBloc>(context).add(DashboardRefreshEvent());
        }
-        return Responsive.isDesktop(context)? state.isLogin==true ? const DashBoardScreen() : const LoginScreen() : const CommonDialog();
+        return Responsive.isDesktop(context)? (state.isLogin==true
+            ? const DashBoardScreen() : const LoginScreen()) : const CommonDialog();
       }else{
         return const SplashScreen();
       }
